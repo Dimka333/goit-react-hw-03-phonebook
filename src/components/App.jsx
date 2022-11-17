@@ -18,6 +18,19 @@ export class App extends Component {
     filter: '',
   }
 
+  componentDidMount() {
+    console.log('componentDidMount');
+    let contacts = localStorage.getItem('contacts');
+    if (contacts) {
+      contacts = JSON.parse(contacts);
+      this.setState({ contacts: contacts})
+    }
+  }
+
+  syncLocalStorage = () => {
+    localStorage.setItem('contacts', JSON.stringify(this.state.contacts))
+  }
+
 
   addContact = (name, number) => {
     const newContact = {
@@ -31,9 +44,10 @@ export class App extends Component {
     }else
     this.setState(prevState => ({
       contacts: [newContact, ...prevState.contacts],
-
-    }));
+    }),() => {this.syncLocalStorage()});
   };
+
+
 
   filterChange = (e) => {
     this.setState({ filter: e.currentTarget.value });
@@ -55,7 +69,7 @@ export class App extends Component {
       contacts: prevState.contacts.filter(
         (contact) => contact.id !== contactID
       )
-    }))
+    }),() => {this.syncLocalStorage()})
   };
 
   render() {
