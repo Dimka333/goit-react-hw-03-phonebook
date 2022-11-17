@@ -1,0 +1,13 @@
+
+.list{
+max-width: 300px;
+}
+.item{
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom: 20px;
+}
+.itemText{
+  margin-right: 20px;
+}
